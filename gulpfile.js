@@ -1,12 +1,13 @@
 var gulp = require('gulp');
 var babel = require('gulp-babel');
+var generateWebpackConfig = require('./generateWebpackConfig.js');
 
 var webpack = require("webpack-stream");
 
 var TestServer = require('karma').Server;
 
 gulp.task('bundle', function(done) {
-  return webpack(require('./webpack.config.js'))
+  return webpack(generateWebpackConfig('DEV'))
     .pipe(gulp.dest('.'));
 });
 

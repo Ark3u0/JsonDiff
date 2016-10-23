@@ -1,4 +1,4 @@
-var webpackConfig = require('./webpack.test.config.js');
+var generateWebpackConfig = require('./generateWebpackConfig.js');
 
 module.exports = function(config) {
   config.set({
@@ -7,7 +7,7 @@ module.exports = function(config) {
     files: ["test/*Test.es6"],
     reporters: ['progress'],
     preprocessors: {
-      './test/*Test.js': ['webpack', 'sourcemap']
+      './test/*Test.es6': ['webpack', 'sourcemap']
     },
     port: 9876,
     colors: true,
@@ -15,7 +15,7 @@ module.exports = function(config) {
     autoWatch: false,
     browsers: ['Chrome'],
     singleRun: false,
-    webpack: webpackConfig,
+    webpack: generateWebpackConfig('TEST'),
     webpackMiddleware: {
       noInfo: true
     }
