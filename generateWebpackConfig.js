@@ -3,17 +3,19 @@ var path = require('path');
 var generateWebpackConfig = function(env) {
     var that = {};
 
-    var TEST_DIR = path.resolve(__dirname, "./test");
-    var SRC_DIR = path.resolve(__dirname, "./src");
+    var TEST_DIR = path.join(__dirname, "test");
+    var SRC_DIR = path.join(__dirname, "src");
+    var NODE_MODULES = path.join(__dirname, 'node_modules');
 
     that.module = {
       loaders: [
         {
-          test: /\.es6?/,
-          include: (env === 'TEST' ? TEST_DIR : SRC_DIR),
+          test: /\.jsx?/,
+          include: (env === 'TEST' ? [TEST_DIR, SRC_DIR] : SRC_DIR),
+          exclude: NODE_MODULES,
           loader: 'babel',
           query: {
-            presets: ['es2015']
+            presets: ['es2015', 'react']
           }
         }
       ]
@@ -22,7 +24,7 @@ var generateWebpackConfig = function(env) {
     that.devtool = "inline-source-map";
 
     if (env !== 'TEST') {
-      that.entry = SRC_DIR + '/main.es6';
+      that.entry = SRC_DIR + '/main.jsx';
       that.output = {
         filename: 'main.js'
       };

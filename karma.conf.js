@@ -4,10 +4,14 @@ module.exports = function(config) {
   config.set({
     basePath: '',
     frameworks: ['jasmine'],
-    files: ["test/*Test.es6"],
+    files: [
+      "./test/**/*.jsx",
+      "./test/*.jsx"
+    ],
     reporters: ['progress'],
     preprocessors: {
-      './test/*Test.es6': ['webpack', 'sourcemap']
+      './test/*.jsx': ['webpack', 'sourcemap'],
+      './test/**/*.jsx': ['webpack', 'sourcemap']
     },
     port: 9876,
     colors: true,

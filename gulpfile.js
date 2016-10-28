@@ -1,5 +1,4 @@
 var gulp = require('gulp');
-var babel = require('gulp-babel');
 var generateWebpackConfig = require('./generateWebpackConfig.js');
 
 var webpack = require("webpack-stream");
