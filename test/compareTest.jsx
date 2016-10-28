@@ -1,4 +1,5 @@
 import compare from '../src/compare.jsx';
+import Node from '../src/node.jsx';
 
 describe('compare', () => {
 
@@ -42,6 +43,15 @@ describe('compare', () => {
 
     expect(outputNode.getFieldSames()).toEqual([{null: null}]);
     expect(outputNode.getFieldDiffs()).toEqual([{string: 'string2'}, {number: true}, {boolean: null}, {something: 'hello'}]);
+  });
+
+  it('should invoke compare on child objects when field on srcJSON and cmpJSON both have object typing', () => {
+    let srcJSON = {object: {}};
+    let cmpJSON= {object: {}};
+
+    let outputNode = compare(srcJSON, cmpJSON);
+
+    expect(outputNode.getFieldSames()).toEqual([{object: new Node()}]);
   });
 });
 

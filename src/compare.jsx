@@ -2,7 +2,7 @@ import Node from './node.jsx';
 import _ from 'lodash';
 import enumerateType from './enumerateType.jsx';
 
-module.exports = (src, cmp) => {
+const compare =  (src, cmp) => {
   let outputNode = new Node();
 
   _.forEach(_.keys(src), (key) => {
@@ -15,6 +15,7 @@ module.exports = (src, cmp) => {
     }
 
     if (srcType === cmpType && srcType === 'OBJECT') {
+      outputNode.addFieldSame({[key]: compare(src[key], cmp[key])});
       return;
     }
 
@@ -32,3 +33,5 @@ module.exports = (src, cmp) => {
 const getFieldType = (json, key) => {
   return enumerateType(json[key]);
 };
+
+module.exports = compare;

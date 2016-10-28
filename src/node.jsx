@@ -11,10 +11,6 @@ class Node {
     this.fieldNegatives.push(fieldNegative);
   }
 
-  addFieldDiff(fieldDiff) {
-    this.fieldDiffs.push(fieldDiff);
-  }
-
   addFieldSame(fieldSame) {
     this.fieldSames.push(fieldSame)
   }
