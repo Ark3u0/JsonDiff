@@ -24,6 +24,28 @@ describe('Node', () => {
     });
   });
 
+  describe('compareAndAddNonObjectField', () => {
 
+    it('should add field same if field args across JSON are strictly equal', () => {
+      let srcJSON = {key: 'value'};
+      let cmpJSON = {key: 'value'};
+      let node = new Node();
 
+      node.compareAndAddNonObjectField('key', srcJSON, cmpJSON);
+
+      expect(node.getFieldSames()).toEqual([{key: 'value'}]);
+      expect(node.getFieldDiffs()).toEqual([]);
+    });
+
+    it('should add field same if field args across JSON are strictly equal', () => {
+      let srcJSON = {key: true};
+      let cmpJSON = {key: 'value'};
+      let node = new Node();
+
+      node.compareAndAddNonObjectField('key', srcJSON, cmpJSON);
+
+      expect(node.getFieldSames()).toEqual([]);
+      expect(node.getFieldDiffs()).toEqual([{key: 'value'}]);
+    });
+  });
 });

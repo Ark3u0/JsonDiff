@@ -35,6 +35,12 @@ class Node {
     return this.fieldSames;
   }
 
+  compareAndAddNonObjectField(key, src, cmp) {
+    (src[key] === cmp[key])
+      ? this.fieldSames.push({[key]: cmp[key]})
+      : this.fieldDiffs.push({[key]: cmp[key]});
+  }
+
   addFieldPositives(src, cmp) {
       let srcKeys = _.keys(src);
       let cmpKeys = _.keys(cmp);
