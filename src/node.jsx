@@ -1,40 +1,25 @@
 
 class Node {
   constructor() {
-    this.fieldNegatives = [];
-    this.fieldPositives = [];
-    this.fieldDiffs = [];
-    this.fieldSames = [];
+    this.fields = [];
   }
 
   addFieldNegative(fieldNegative) {
-    this.fieldNegatives.push(fieldNegative);
+    this.fields.push({tag: 'NEGATIVE', src: fieldNegative, cmp: undefined});
   }
 
   addFieldSame(fieldSame) {
-    this.fieldSames.push(fieldSame)
+    this.fields.push({tag: 'SAME', src: fieldSame, cmp: fieldSame});
   }
 
-  getFieldNegatives() {
-    return this.fieldNegatives;
-  }
-
-  getFieldPositives() {
-    return this.fieldPositives;
-  }
-
-  getFieldDiffs() {
-    return this.fieldDiffs;
-  }
-
-  getFieldSames() {
-    return this.fieldSames;
+  getFields() {
+    return this.fields;
   }
 
   compareAndAddNonObjectField(key, src, cmp) {
     (src[key] === cmp[key])
-      ? this.fieldSames.push({[key]: cmp[key]})
-      : this.fieldDiffs.push({[key]: cmp[key]});
+      ? this.fields.push({tag: 'SAME', src: {[key]: cmp[key]}, cmp: {[key]: cmp[key]}})
+      : this.fields.push({tag: 'DIFF', src: {[key]: src[key]}, cmp: {[key]: cmp[key]}});
   }
 
   addFieldPositives(src, cmp) {
@@ -46,7 +31,7 @@ class Node {
       });
 
       _.forEach(uniqueCmpKeys, (key) => {
-        this.fieldPositives.push({[key]: cmp[key]});
+        this.fields.push({tag: 'POSITIVE', src: undefined, cmp: {[key]: cmp[key]}});
       });
   }
 }

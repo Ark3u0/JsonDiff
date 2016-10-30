@@ -12,8 +12,6 @@ module.exports = (obj) => {
   } else {
     return "UNDEFINED";
   }
-
-
 };
 
 const isArray = (obj) => {

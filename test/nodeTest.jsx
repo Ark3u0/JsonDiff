@@ -10,7 +10,9 @@ describe('Node', () => {
 
       node.addFieldPositives(srcJSON, cmpJSON);
 
-      expect(node.getFieldPositives()).toEqual([{key1: 'value1'}, {key2: 'value2'}]);
+      expect(node.getFields()).toEqual([
+        {tag: 'POSITIVE', src: undefined, cmp: {key1: 'value1'}},
+        {tag: 'POSITIVE', src: undefined, cmp: {key2: 'value2'}}]);
     });
 
     it('should not add fields on Node whe srcJSON has field that cmpJSON does not', () => {
@@ -20,7 +22,7 @@ describe('Node', () => {
 
       node.addFieldPositives(srcJSON, cmpJSON);
 
-      expect(node.getFieldPositives()).toEqual([]);
+      expect(node.getFields()).toEqual([]);
     });
   });
 
@@ -32,8 +34,8 @@ describe('Node', () => {
 
       node.compareAndAddNonObjectField('key', srcJSON, cmpJSON);
 
-      expect(node.getFieldSames()).toEqual([{key: 'value'}]);
-      expect(node.getFieldDiffs()).toEqual([]);
+      expect(node.getFields()).toEqual([
+        {tag: 'SAME', src: {key: 'value'}, cmp: {key: 'value'}}]);
     });
 
     it('should add field diff if field args across JSON are strictly not equal', () => {
@@ -43,8 +45,8 @@ describe('Node', () => {
 
       node.compareAndAddNonObjectField('key', srcJSON, cmpJSON);
 
-      expect(node.getFieldSames()).toEqual([]);
-      expect(node.getFieldDiffs()).toEqual([{key: 'value'}]);
+      expect(node.getFields()).toEqual([
+        {tag: 'DIFF', src: {key: true}, cmp: {key: 'value'}}]);
     });
   });
 });
