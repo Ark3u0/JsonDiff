@@ -1,5 +1,5 @@
 import compare from '../src/compare.jsx';
-import Node from '../src/objectNode.jsx';
+import ObjectNode from '../src/objectNode.jsx';
 import ArrayNode from '../src/arrayNode.jsx';
 
 describe('compare', () => {
@@ -62,7 +62,7 @@ describe('compare', () => {
     let outputNode = compare(srcJSON, cmpJSON);
 
     expect(outputNode.getFields()).toEqual([
-      {tag: 'SAME', key: 'object', src: new Node(), cmp: new Node()}]);
+      {tag: 'SAME', key: 'object', src: new ObjectNode(), cmp: new ObjectNode()}]);
   });
 
   it('should treat objects in array as the same', () => {
@@ -77,8 +77,8 @@ describe('compare', () => {
     expect(outputNode.getFields()[0].src instanceof ArrayNode).toEqual(true);
     expect(outputNode.getFields()[0].cmp instanceof ArrayNode).toEqual(true);
     expect(outputNode.getFields()[0].src.getArray()[0].tag).toEqual('SAME');
-    expect(outputNode.getFields()[0].src.getArray()[0].src instanceof Node).toEqual(true);
-    expect(outputNode.getFields()[0].src.getArray()[0].cmp instanceof Node).toEqual(true);
+    expect(outputNode.getFields()[0].src.getArray()[0].src instanceof ObjectNode).toEqual(true);
+    expect(outputNode.getFields()[0].src.getArray()[0].cmp instanceof ObjectNode).toEqual(true);
   });
 
   it('should treat arrays in array as the same', () => {

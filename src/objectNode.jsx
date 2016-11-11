@@ -17,7 +17,7 @@ class ObjectNode extends Node {
   includeTopLevelRightBracket() {
     return this.props.isTop ? "}" : null;
   }
-  
+
   addField(tag, key, field) {
      (tag === 'NEGATIVE')
        ? this.fields.push({tag: 'NEGATIVE', key: key, src: field, cmp: undefined})

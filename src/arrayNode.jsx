@@ -105,6 +105,6 @@ const styles = {
   },
   same: {},
   listContainer: {
-    listStyleType: "none",
+    listStyleType: "none"
   }
 };

@@ -15,11 +15,18 @@ var generateWebpackConfig = function(env) {
           exclude: NODE_MODULES,
           loader: 'babel',
           query: {
-            presets: ['es2015', 'react']
+            presets: ['es2015', 'react', 'airbnb']
           }
         }
       ]
     };
+
+  that.externals = {
+    'cheerio': 'window',
+    'react/addons': true,
+    'react/lib/ExecutionEnvironment': true,
+    'react/lib/ReactContext': true
+  };
 
     that.devtool = "inline-source-map";
 
