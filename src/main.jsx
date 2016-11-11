@@ -1,13 +1,10 @@
-// bugs:
-// - handling of arrays
-
-import Comparator from './compare.jsx';
+import compare from './compare.jsx';
+import JSONInput from './jsonInput.jsx';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
 
 const { Component } = React;
-const comparator = new Comparator();
 
 
 class Index extends Component {
@@ -15,49 +12,34 @@ class Index extends Component {
     super(props);
     this.state = {
       srcValue: '',
+      srcJson: undefined,
       cmpValue: '',
-      outputTree: undefined,
+      cmpJson: undefined,
       errorValue: ''};
-    this.handleChange = this.handleChange.bind(this);
   }
 
-  handleChange(event) {
-    this.updateStateForChangedInput(event);
-
+  render() {
+    let srcJson, cmpJson;
     try {
-      const srcJson = JSON.parse(this.state.srcValue);
-      const cmpJson = JSON.parse(this.state.cmpValue);
-
-      this.setState({
-        outputTree: comparator.compare(srcJson, cmpJson)
-      });
+      srcJson = JSON.parse(this.state.srcValue);
+      cmpJson = JSON.parse(this.state.cmpValue);
     } catch (parseException) {
       console.log(parseException);
     }
-  }
 
-  // Might need to consolidate to one setState call...
-  updateStateForChangedInput(event) {
-    const id = event.target.id;
-    this.setState({[id + "Value"]: event.target.value});
-  }
+    const diff = !!srcJson && !!cmpJson
+                ? compare(srcJson, cmpJson).render()
+                : null;
 
-
-  render() {
     return (
      <div id="index">
-       <input id="src"
-              placeholder="source JSON"
-              value={this.state.srcValue}
-              onChange={this.handleChange}/>
-       <input id="cmp"
-              placeholder="comparison JSON"
-              value={this.state.cmpValue}
-              onChange={this.handleChange}/>
-       <div id="output">
-         <div>Source: {this.state.srcValue}</div>
-         <div>Comparison: {this.state.cmpValue}</div>
-       </div>
+       <JSONInput placeholder="source JSON"
+                  value={this.state.srcValue}
+                  onChange={(event) => this.setState({srcValue: event.target.value})}/>
+       <JSONInput placeholder="compare JSON"
+                  value={this.state.cmpValue}
+                  onChange={(event) => this.setState({cmpValue: event.target.value})}/>
+       {diff}
      </div>
    )
   }

@@ -1,9 +1,9 @@
-import Node from '../src/node.jsx';
+import Node from '../src/objectNode.jsx';
 
-describe('Node', () => {
+describe('ObjectNode', () => {
 
   describe('addFieldPositives', () => {
-    it('should add fields on Node when cmpJSON has field that srcJSON does not', () => {
+    it('should add fields on ObjectNode when cmpJSON has field that srcJSON does not', () => {
       let srcJSON = {};
       let cmpJSON = {key1: 'value1', key2: 'value2'};
       let node = new Node();
@@ -11,11 +11,11 @@ describe('Node', () => {
       node.addFieldPositives(srcJSON, cmpJSON);
 
       expect(node.getFields()).toEqual([
-        {tag: 'POSITIVE', src: undefined, cmp: {key1: 'value1'}},
-        {tag: 'POSITIVE', src: undefined, cmp: {key2: 'value2'}}]);
+        {tag: 'POSITIVE', key: 'key1', src: undefined, cmp: 'value1'},
+        {tag: 'POSITIVE', key: 'key2', src: undefined, cmp: 'value2'}]);
     });
 
-    it('should not add fields on Node whe srcJSON has field that cmpJSON does not', () => {
+    it('should not add fields on ObjectNode whe srcJSON has field that cmpJSON does not', () => {
       let srcJSON = {key1: 'value1', key2: 'value2'};
       let cmpJSON = {};
       let node = new Node();
@@ -35,7 +35,7 @@ describe('Node', () => {
       node.compareAndAddNonObjectField('key', srcJSON, cmpJSON);
 
       expect(node.getFields()).toEqual([
-        {tag: 'SAME', src: {key: 'value'}, cmp: {key: 'value'}}]);
+        {tag: 'SAME', key: 'key', src: 'value', cmp: 'value'}]);
     });
 
     it('should add field diff if field args across JSON are strictly not equal', () => {
@@ -46,7 +46,7 @@ describe('Node', () => {
       node.compareAndAddNonObjectField('key', srcJSON, cmpJSON);
 
       expect(node.getFields()).toEqual([
-        {tag: 'DIFF', src: {key: true}, cmp: {key: 'value'}}]);
+        {tag: 'DIFF', key: 'key', src: true, cmp: 'value'}]);
     });
   });
 });

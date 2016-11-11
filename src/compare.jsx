@@ -1,12 +1,13 @@
 import _ from 'lodash';
 
-import Node from './node.jsx';
+import ObjectNode from './objectNode.jsx';
 import ArrayNode from './arrayNode.jsx';
+import pushTag from './pushTag.jsx';
 
 import enumerateType from './enumerateType.jsx';
 
 const compareArrays = (srcArray, cmpArray) => {
-  let outputNode = new ArrayNode();
+  let outputNode = new ArrayNode({pushTag: pushTag});
   let index = 0;
 
   for (; index < srcArray.length && index < cmpArray.length; index++) {
@@ -37,24 +38,24 @@ const compareArrays = (srcArray, cmpArray) => {
 };
 
 const compare =  (src, cmp) => {
-  let outputNode = new Node();
+  let outputNode = new ObjectNode({pushTag: pushTag});
 
   _.forEach(_.keys(src), (key) => {
     const srcType = enumerateType(src[key]);
     const cmpType = enumerateType(cmp[key]);
 
     if (cmpType === 'UNDEFINED') {
-      outputNode.addFieldNegative({[key]: src[key]});
+      outputNode.addFieldNegative(key, src[key]);
       return;
     }
 
     if (srcType === cmpType && srcType === 'OBJECT') {
-      outputNode.addFieldSame({[key]: compare(src[key], cmp[key])});
+      outputNode.addFieldSame(key, compare(src[key], cmp[key]));
       return;
     }
 
     if (srcType === cmpType && srcType === 'ARRAY') {
-      outputNode.addFieldSame({[key]: compareArrays(src[key], cmp[key])});
+      outputNode.addFieldSame(key, compareArrays(src[key], cmp[key]));
       return;
     }
 

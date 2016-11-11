@@ -1,10 +1,10 @@
 import compare from '../src/compare.jsx';
-import Node from '../src/node.jsx';
+import Node from '../src/objectNode.jsx';
 import ArrayNode from '../src/arrayNode.jsx';
 
 describe('compare', () => {
 
-  it('should return empty Node when srcJSON and cmpJSON are empty objects', () => {
+  it('should return empty ObjectNode when srcJSON and cmpJSON are empty objects', () => {
     let srcJSON = {};
     let cmpJSON = {};
 
@@ -13,46 +13,46 @@ describe('compare', () => {
     expect(outputNode.getFields()).toEqual([]);
   });
 
-  it('should add field positives to Node when cmpJSON has fields srcJSON does not', () => {
+  it('should add field positives to ObjectNode when cmpJSON has fields srcJSON does not', () => {
     let srcJSON = {};
     let cmpJSON = {string: 'string', number: 123, boolean: true, object: {}, null: null};
 
     let outputNode = compare(srcJSON, cmpJSON);
 
     expect(outputNode.getFields()).toEqual([
-      {tag: 'POSITIVE', src: undefined, cmp: {string: 'string'}},
-      {tag: 'POSITIVE', src: undefined, cmp: {number: 123}},
-      {tag: 'POSITIVE', src: undefined, cmp: {boolean: true}},
-      {tag: 'POSITIVE', src: undefined, cmp: {object: {}}},
-      {tag: 'POSITIVE', src: undefined, cmp: {null: null}}]);
+      {tag: 'POSITIVE', key: 'string', src: undefined, cmp: 'string'},
+      {tag: 'POSITIVE', key: 'number', src: undefined, cmp: 123},
+      {tag: 'POSITIVE', key: 'boolean', src: undefined, cmp: true},
+      {tag: 'POSITIVE', key: 'object', src: undefined, cmp: {}},
+      {tag: 'POSITIVE', key: 'null', src: undefined, cmp: null}]);
   });
 
-  it('should add field negatives to Node when srcJSON has field cmpJSON does not', () => {
+  it('should add field negatives to ObjectNode when srcJSON has field cmpJSON does not', () => {
     let srcJSON = {string: 'string', number: 123, boolean: true, object: {}, null: null};
     let cmpJSON = {};
 
     let outputNode = compare(srcJSON, cmpJSON);
 
     expect(outputNode.getFields()).toEqual([
-      {tag: 'NEGATIVE', cmp: undefined, src: {string: 'string'}},
-      {tag: 'NEGATIVE', cmp: undefined, src: {number: 123}},
-      {tag: 'NEGATIVE', cmp: undefined, src: {boolean: true}},
-      {tag: 'NEGATIVE', cmp: undefined, src: {object: {}}},
-      {tag: 'NEGATIVE', cmp: undefined, src: {null: null}}]);
+      {tag: 'NEGATIVE', key: 'string', cmp: undefined, src: 'string'},
+      {tag: 'NEGATIVE', key: 'number', cmp: undefined, src: 123},
+      {tag: 'NEGATIVE', key: 'boolean', cmp: undefined, src: true},
+      {tag: 'NEGATIVE', key: 'object', cmp: undefined, src: {}},
+      {tag: 'NEGATIVE', key: 'null', cmp: undefined, src: null}]);
   });
 
-  it('should add field diffs and sames to Node when srcJSON and cmpJSON when Object/Array typing are not equal', () => {
+  it('should add field diffs and sames to ObjectNode when srcJSON and cmpJSON when Object/Array typing are not equal', () => {
     let srcJSON = {string: 'string1', number: 123, boolean: true, null: null, something: {}};
     let cmpJSON = {string: 'string2', number: true, boolean: null, null: null, something: 'hello'};
 
     let outputNode = compare(srcJSON, cmpJSON);
 
     expect(outputNode.getFields()).toEqual([
-      {tag: 'DIFF', src: {string: 'string1'}, cmp: {string: 'string2'}},
-      {tag: 'DIFF', src: {number: 123}, cmp: {number: true}},
-      {tag: 'DIFF', src: {boolean: true}, cmp: {boolean: null}},
-      {tag: 'SAME', src: {null: null}, cmp: {null: null}},
-      {tag: 'DIFF', src: {something: {}}, cmp: {something: 'hello'}}]);
+      {tag: 'DIFF', key: 'string', src: 'string1', cmp: 'string2'},
+      {tag: 'DIFF', key: 'number', src: 123, cmp: true},
+      {tag: 'DIFF', key: 'boolean', src: true, cmp: null},
+      {tag: 'SAME', key: 'null', src: null, cmp: null},
+      {tag: 'DIFF', key: 'something', src: {}, cmp: 'hello'}]);
   });
 
   it('should invoke compare on child objects when field on srcJSON and cmpJSON both have object typing', () => {
@@ -62,7 +62,7 @@ describe('compare', () => {
     let outputNode = compare(srcJSON, cmpJSON);
 
     expect(outputNode.getFields()).toEqual([
-      {tag: 'SAME', src: {object: new Node()}, cmp: {object: new Node()}}]);
+      {tag: 'SAME', key: 'object', src: new Node(), cmp: new Node()}]);
   });
 
   it('should treat objects in array as the same', () => {
@@ -73,11 +73,12 @@ describe('compare', () => {
 
     expect(outputNode.getFields().length).toEqual(1);
     expect(outputNode.getFields()[0].tag).toEqual('SAME');
-    expect(outputNode.getFields()[0].src).toEqual(outputNode.getFields()[0].cmp);
-    expect(outputNode.getFields()[0].src.array instanceof ArrayNode).toEqual(true);
-    expect(outputNode.getFields()[0].src.array.getArray()[0].src).toEqual(outputNode.getFields()[0].src.array.getArray()[0].cmp);
-    expect(outputNode.getFields()[0].src.array.getArray()[0].src instanceof Node).toEqual(true);
-
+    expect(outputNode.getFields()[0].key).toEqual('array');
+    expect(outputNode.getFields()[0].src instanceof ArrayNode).toEqual(true);
+    expect(outputNode.getFields()[0].cmp instanceof ArrayNode).toEqual(true);
+    expect(outputNode.getFields()[0].src.getArray()[0].tag).toEqual('SAME');
+    expect(outputNode.getFields()[0].src.getArray()[0].src instanceof Node).toEqual(true);
+    expect(outputNode.getFields()[0].src.getArray()[0].cmp instanceof Node).toEqual(true);
   });
 
   it('should treat arrays in array as the same', () => {
@@ -88,11 +89,12 @@ describe('compare', () => {
 
     expect(outputNode.getFields().length).toEqual(1);
     expect(outputNode.getFields()[0].tag).toEqual('SAME');
-    expect(outputNode.getFields()[0].src).toEqual(outputNode.getFields()[0].cmp);
-    expect(outputNode.getFields()[0].src.array instanceof ArrayNode).toEqual(true);
-    expect(outputNode.getFields()[0].src.array.getArray()[0].src).toEqual(outputNode.getFields()[0].src.array.getArray()[0].cmp);
-    expect(outputNode.getFields()[0].src.array.getArray()[0].src instanceof ArrayNode).toEqual(true);
-
+    expect(outputNode.getFields()[0].key).toEqual('array');
+    expect(outputNode.getFields()[0].src instanceof ArrayNode).toEqual(true);
+    expect(outputNode.getFields()[0].cmp instanceof ArrayNode).toEqual(true);
+    expect(outputNode.getFields()[0].src.getArray()[0].tag).toEqual('SAME');
+    expect(outputNode.getFields()[0].src.getArray()[0].src instanceof ArrayNode).toEqual(true);
+    expect(outputNode.getFields()[0].src.getArray()[0].cmp instanceof ArrayNode).toEqual(true);
   });
 
   it('should push diff element in array if not object/array and are not equal', () => {
@@ -103,10 +105,12 @@ describe('compare', () => {
 
     expect(outputNode.getFields().length).toEqual(1);
     expect(outputNode.getFields()[0].tag).toEqual('SAME');
-    expect(outputNode.getFields()[0].src.array instanceof ArrayNode).toEqual(true);
-    expect(outputNode.getFields()[0].src.array.getArray()[0].tag).toEqual('DIFF');
-    expect(outputNode.getFields()[0].src.array.getArray()[0].src).toEqual('a');
-    expect(outputNode.getFields()[0].src.array.getArray()[0].cmp).toEqual('b');
+    expect(outputNode.getFields()[0].key).toEqual('array');
+    expect(outputNode.getFields()[0].src instanceof ArrayNode).toEqual(true);
+    expect(outputNode.getFields()[0].cmp instanceof ArrayNode).toEqual(true);
+    expect(outputNode.getFields()[0].src.getArray()[0].tag).toEqual('DIFF');
+    expect(outputNode.getFields()[0].src.getArray()[0].src).toEqual('a');
+    expect(outputNode.getFields()[0].src.getArray()[0].cmp).toEqual('b');
   });
 
   it('should push same element in array if equal', () => {
@@ -117,10 +121,12 @@ describe('compare', () => {
 
     expect(outputNode.getFields().length).toEqual(1);
     expect(outputNode.getFields()[0].tag).toEqual('SAME');
-    expect(outputNode.getFields()[0].src.array instanceof ArrayNode).toEqual(true);
-    expect(outputNode.getFields()[0].src.array.getArray()[0].tag).toEqual('SAME');
-    expect(outputNode.getFields()[0].src.array.getArray()[0].src).toEqual('a');
-    expect(outputNode.getFields()[0].src.array.getArray()[0].cmp).toEqual('a');
+    expect(outputNode.getFields()[0].key).toEqual('array');
+    expect(outputNode.getFields()[0].src instanceof ArrayNode).toEqual(true);
+    expect(outputNode.getFields()[0].cmp instanceof ArrayNode).toEqual(true);
+    expect(outputNode.getFields()[0].src.getArray()[0].tag).toEqual('SAME');
+    expect(outputNode.getFields()[0].src.getArray()[0].src).toEqual('a');
+    expect(outputNode.getFields()[0].src.getArray()[0].cmp).toEqual('a');
   });
 
   it('should push for elements when the lengths are not the same size', () => {
@@ -131,13 +137,15 @@ describe('compare', () => {
 
     expect(outputNode.getFields().length).toEqual(1);
     expect(outputNode.getFields()[0].tag).toEqual('SAME');
-    expect(outputNode.getFields()[0].src.array instanceof ArrayNode).toEqual(true);
-    expect(outputNode.getFields()[0].src.array.getArray()[0].tag).toEqual('SAME');
-    expect(outputNode.getFields()[0].src.array.getArray()[0].src).toEqual('a');
-    expect(outputNode.getFields()[0].src.array.getArray()[0].cmp).toEqual('a');
-    expect(outputNode.getFields()[0].src.array.getArray()[1].tag).toEqual('POSITIVE');
-    expect(outputNode.getFields()[0].src.array.getArray()[1].src).not.toBeDefined();
-    expect(outputNode.getFields()[0].src.array.getArray()[1].cmp).toEqual('b');
+    expect(outputNode.getFields()[0].key).toEqual('array');
+    expect(outputNode.getFields()[0].src instanceof ArrayNode).toEqual(true);
+    expect(outputNode.getFields()[0].cmp instanceof ArrayNode).toEqual(true);
+    expect(outputNode.getFields()[0].src.getArray()[0].tag).toEqual('SAME');
+    expect(outputNode.getFields()[0].src.getArray()[0].src).toEqual('a');
+    expect(outputNode.getFields()[0].src.getArray()[0].cmp).toEqual('a');
+    expect(outputNode.getFields()[0].src.getArray()[1].tag).toEqual('POSITIVE');
+    expect(outputNode.getFields()[0].src.getArray()[1].src).not.toBeDefined();
+    expect(outputNode.getFields()[0].src.getArray()[1].cmp).toEqual('b');
   });
 });
 
