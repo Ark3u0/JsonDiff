@@ -1,12 +1,19 @@
-import Node from '../src/objectNode.jsx';
+import ObjectNode from '../src/objectNode.jsx';
 
 describe('ObjectNode', () => {
+  const props = {
+    pushTag: (tag, field) => { return field; }
+  };
+
+  beforeEach(() => {
+    spyOn(props, 'pushTag');
+  });
 
   describe('addFieldPositives', () => {
     it('should add fields on ObjectNode when cmpJSON has field that srcJSON does not', () => {
       let srcJSON = {};
       let cmpJSON = {key1: 'value1', key2: 'value2'};
-      let node = new Node();
+      let node = new ObjectNode(props);
 
       node.addFieldPositives(srcJSON, cmpJSON);
 
@@ -18,7 +25,7 @@ describe('ObjectNode', () => {
     it('should not add fields on ObjectNode whe srcJSON has field that cmpJSON does not', () => {
       let srcJSON = {key1: 'value1', key2: 'value2'};
       let cmpJSON = {};
-      let node = new Node();
+      let node = new ObjectNode(props);
 
       node.addFieldPositives(srcJSON, cmpJSON);
 
@@ -30,7 +37,7 @@ describe('ObjectNode', () => {
     it('should add field same if field args across JSON are strictly equal', () => {
       let srcJSON = {key: 'value'};
       let cmpJSON = {key: 'value'};
-      let node = new Node();
+      let node = new ObjectNode(props);
 
       node.compareAndAddNonObjectField('key', srcJSON, cmpJSON);
 
@@ -41,7 +48,7 @@ describe('ObjectNode', () => {
     it('should add field diff if field args across JSON are strictly not equal', () => {
       let srcJSON = {key: true};
       let cmpJSON = {key: 'value'};
-      let node = new Node();
+      let node = new ObjectNode(props);
 
       node.compareAndAddNonObjectField('key', srcJSON, cmpJSON);
 

@@ -59,7 +59,7 @@ const styles = {
   },
   boolean: {
     fontWeight: "bold",
-    color: "purple"
+    color: "blue"
   },
   null: {
     fontWeight: "bold",
