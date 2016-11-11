@@ -15,7 +15,7 @@ const compareArrays = (srcArray, cmpArray) => {
     const cmpElemType = enumerateType(cmpArray[index]);
 
     if (srcElemType === cmpElemType && srcElemType === 'OBJECT') {
-      outputNode.pushSameElem(compare(srcArray[index], cmpArray[index]));
+      outputNode.pushSameElem(compareObjects(srcArray[index], cmpArray[index]));
       continue;
     }
 
@@ -37,8 +37,8 @@ const compareArrays = (srcArray, cmpArray) => {
   return outputNode;
 };
 
-const compare =  (src, cmp) => {
-  let outputNode = new ObjectNode({pushTag: pushTag});
+const compareObjects =  (src, cmp, isTop) => {
+  let outputNode = new ObjectNode({pushTag: pushTag, isTop: isTop});
 
   _.forEach(_.keys(src), (key) => {
     const srcType = enumerateType(src[key]);
@@ -50,7 +50,7 @@ const compare =  (src, cmp) => {
     }
 
     if (srcType === cmpType && srcType === 'OBJECT') {
-      outputNode.addFieldSame(key, compare(src[key], cmp[key]));
+      outputNode.addFieldSame(key, compareObjects(src[key], cmp[key]));
       return;
     }
 
@@ -66,5 +66,8 @@ const compare =  (src, cmp) => {
   return outputNode;
 };
 
+const compare = (src, cmp) => {
+  return compareObjects(src, cmp, true);
+};
 
 module.exports = compare;

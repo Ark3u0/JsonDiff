@@ -7,8 +7,15 @@ class ObjectNode extends Node {
   constructor(props) {
     super(props);
     this.fields = [];
-
     this.nodeType = "ObjectNode";
+  }
+
+  includeTopLevelLeftBracket() {
+    return this.props.isTop ? "{" : null;
+  }
+
+  includeTopLevelRightBracket() {
+    return this.props.isTop ? "}" : null;
   }
   
   addField(tag, key, field) {
@@ -49,25 +56,55 @@ class ObjectNode extends Node {
   }
 
   render() {
+    const padLeft = this.props.isTop ? {paddingLeft: "40px"} : {};
+
     const output = _.flatten(_.map(this.getFields(), (field) => {
       switch (field.tag) {
         case 'DIFF':
-          return [<li style={styles.removed} key={this.getId()}>{String(field.key)}: {this.writeValue(field.src)}</li>,
-            <li style={styles.added} key={this.getId()}>{String(field.key)}: {this.writeValue(field.cmp)}</li>];
+          return [
+            <li style={Object.assign({}, styles.removed, padLeft)} key={this.getId()}>
+              {String(field.key)}: {this.writeLeftBracket(field.src)}
+                {this.writeValue(field.src)}
+              {this.writeRightBracket(field.src)}
+            </li>,
+            <li style={Object.assign({}, styles.added, padLeft)} key={this.getId()}>
+              {String(field.key)}: {this.writeLeftBracket(field.cmp)}
+                {this.writeValue(field.cmp)}
+              {this.writeRightBracket(field.cmp)}
+            </li>
+          ];
         case 'SAME':
-          return [<li key={this.getId()}>{String(field.key)}: {this.writeValue(field.src)}</li>];
+          return [
+            <li style={Object.assign({}, styles.same, padLeft)} key={this.getId()}>
+              {String(field.key)}: {this.writeLeftBracket(field.src)}
+                {this.writeValue(field.src)}
+              {this.writeRightBracket(field.src)}
+            </li>
+          ];
         case 'POSITIVE':
-          return [<li style={styles.added} key={this.getId()}>{String(field.key)}: {this.writeValue(field.cmp)}</li>];
+          return [
+            <li style={Object.assign({}, styles.added, padLeft)} key={this.getId()}>
+              {String(field.key)}: {this.writeLeftBracket(field.cmp)}
+                {this.writeValue(field.cmp)}
+              {this.writeRightBracket(field.cmp)}
+            </li>
+          ];
         case 'NEGATIVE':
-          return [<li style={styles.removed} key={this.getId()}>{String(field.key)}: {this.writeValue(field.src)}</li>];
+          return [
+            <li style={Object.assign({}, styles.removed, padLeft)} key={this.getId()}>
+              {String(field.key)}: {this.writeLeftBracket(field.src)}
+                {this.writeValue(field.src)}
+              {this.writeRightBracket(field.src)}
+            </li>
+          ];
         default:
           return [];
       }
     }));
-    return <ul style={styles.unbulleted}>
-      {'{'}
+    return <ul style={styles.listContainer}>
+      {this.includeTopLevelLeftBracket()}
       {output}
-      {'}'}
+      {this.includeTopLevelRightBracket()}
     </ul>;
   }
 }
@@ -76,14 +113,13 @@ module.exports = ObjectNode;
 
 const styles = {
   removed: {
-    backgroundColor: "#F47B7B",
-    paddingLeft: "10px"
+    backgroundColor: "#F47B7B"
   },
   added: {
-    backgroundColor: "#0EFF6A",
-    paddingLeft: "10px"
+    backgroundColor: "#0EFF6A"
   },
-  unbulleted: {
+  same: {},
+  listContainer: {
     listStyleType: "none"
   }
 };

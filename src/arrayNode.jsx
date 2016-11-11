@@ -49,23 +49,47 @@ class ArrayNode extends Node {
     const output = _.flatten(_.map(this.getArray(), (element) => {
       switch (element.tag) {
         case 'DIFF':
-          return [<li style={styles.removed} key={this.getId()}>{this.writeValue(element.src)}</li>,
-            <li style={styles.added} key={this.getId()}>{this.writeValue(element.cmp)}</li>];
+          return [
+            <li style={styles.removed} key={this.getId()}>
+              {this.writeLeftBracket(element.src)}
+                {this.writeValue(element.src)}
+              {this.writeRightBracket(element.src)}
+            </li>,
+            <li style={styles.added} key={this.getId()}>
+              {this.writeLeftBracket(element.cmp)}
+                {this.writeValue(element.cmp)}
+              {this.writeRightBracket(element.cmp)}
+            </li>
+          ];
         case 'SAME':
-          return [<li key={this.getId()}>{this.writeValue(element.src)}</li>];
+          return [
+            <li style={styles.same} key={this.getId()}>
+              {this.writeLeftBracket(element.src)}
+                {this.writeValue(element.src)}
+              {this.writeRightBracket(element.src)}
+            </li>];
         case 'POSITIVE':
-          return [<li style={styles.added} key={this.getId()}>{this.writeValue(element.cmp)}</li>];
+          return [
+            <li style={styles.added} key={this.getId()}>
+              {this.writeLeftBracket(element.cmp)}
+                {this.writeValue(element.cmp)}
+              {this.writeRightBracket(element.cmp)}
+            </li>
+          ];
         case 'NEGATIVE':
-          return [<li style={styles.removed} key={this.getId()}>{this.writeValue(element.src)}</li>];
+          return [
+            <li style={styles.removed} key={this.getId()}>
+              {this.writeLeftBracket(element.src)}
+                {this.writeValue(element.src)}
+              {this.writeRightBracket(element.src)}
+            </li>];
         default:
           return [];
       }
     }));
 
-    return <ul style={styles.unbulleted}>
-      {'['}
+    return <ul style={styles.listContainer}>
       {output}
-      {']'}
     </ul>;
   }
 }
@@ -74,14 +98,13 @@ module.exports = ArrayNode;
 
 const styles = {
   removed: {
-    backgroundColor: "#F47B7B",
-    paddingLeft: "10px"
+    backgroundColor: "#F47B7B"
   },
   added: {
-    backgroundColor: "#0EFF6A",
-    paddingLeft: "10px"
+    backgroundColor: "#0EFF6A"
   },
-  unbulleted: {
-    listStyleType: "none"
+  same: {},
+  listContainer: {
+    listStyleType: "none",
   }
 };

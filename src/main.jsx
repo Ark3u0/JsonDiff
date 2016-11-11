@@ -6,7 +6,6 @@ import ReactDOM from 'react-dom';
 
 const { Component } = React;
 
-
 class Index extends Component {
   constructor(props) {
     super(props);
@@ -39,7 +38,10 @@ class Index extends Component {
        <JSONInput placeholder="compare JSON"
                   value={this.state.cmpValue}
                   onChange={(event) => this.setState({cmpValue: event.target.value})}/>
-       {diff}
+       <div id="output">
+         <div style={{fontWeight: "bold"}}>Output:</div>
+          {diff}
+       </div>
      </div>
    )
   }
