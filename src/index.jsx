@@ -1,7 +1,7 @@
 import React from 'react';
 
 import JSONInput from './jsonInput.jsx';
-
+import parse from './parse.jsx';
 import compare from './compare.jsx';
 
 const { Component } = React;
@@ -20,13 +20,13 @@ class Index extends Component {
   render() {
     let srcJson, cmpJson;
     try {
-      srcJson = JSON.parse(this.state.srcValue);
-      cmpJson = JSON.parse(this.state.cmpValue);
+      srcJson = parse(this.state.srcValue);
+      cmpJson = parse(this.state.cmpValue);
     } catch (parseException) {
       console.log(parseException);
     }
 
-    const diff = !!srcJson && !!cmpJson
+    const diff = srcJson !== undefined && cmpJson !== undefined
       ? compare(srcJson, cmpJson).render()
       : null;
 

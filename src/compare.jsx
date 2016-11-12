@@ -77,13 +77,17 @@ const compare = (src, cmp) => {
       case "ARRAY":
         return compareArrays(src, cmp, true);
       default:
-        throw "Top JSON structure must be array or object.";
+        break;
     }
   }
 
-  let arrayNode = new ArrayNode({pushTag: pushTag});
-  arrayNode.pushDiffElem(src, cmp);
-  return arrayNode;
+  let topLevelComparison = new ArrayNode({pushTag: pushTag});
+
+  src === cmp
+    ? topLevelComparison.pushSameElem(src)
+    : topLevelComparison.pushDiffElem(src, cmp);
+
+  return topLevelComparison;
 };
 
 module.exports = compare;
