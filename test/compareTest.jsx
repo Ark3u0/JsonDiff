@@ -1,8 +1,11 @@
 import compare from '../src/compare.jsx';
 import ObjectNode from '../src/objectNode.jsx';
 import ArrayNode from '../src/arrayNode.jsx';
+import pushTag from '../src/pushTag.jsx';
 
 describe('compare', () => {
+  const emptyObjectNodeWithIsTop = new ObjectNode({pushTag: pushTag, isTop: undefined});
+  const emptyObjectNode = new ObjectNode({pushTag: pushTag});
 
   it('should return empty ObjectNode when srcJSON and cmpJSON are empty objects', () => {
     let srcJSON = {};
@@ -23,7 +26,7 @@ describe('compare', () => {
       {tag: 'POSITIVE', key: 'string', src: undefined, cmp: 'string'},
       {tag: 'POSITIVE', key: 'number', src: undefined, cmp: 123},
       {tag: 'POSITIVE', key: 'boolean', src: undefined, cmp: true},
-      {tag: 'POSITIVE', key: 'object', src: undefined, cmp: {}},
+      {tag: 'POSITIVE', key: 'object', src: undefined, cmp: emptyObjectNode},
       {tag: 'POSITIVE', key: 'null', src: undefined, cmp: null}]);
   });
 
@@ -37,7 +40,7 @@ describe('compare', () => {
       {tag: 'NEGATIVE', key: 'string', cmp: undefined, src: 'string'},
       {tag: 'NEGATIVE', key: 'number', cmp: undefined, src: 123},
       {tag: 'NEGATIVE', key: 'boolean', cmp: undefined, src: true},
-      {tag: 'NEGATIVE', key: 'object', cmp: undefined, src: {}},
+      {tag: 'NEGATIVE', key: 'object', cmp: undefined, src: emptyObjectNode},
       {tag: 'NEGATIVE', key: 'null', cmp: undefined, src: null}]);
   });
 
@@ -52,7 +55,7 @@ describe('compare', () => {
       {tag: 'DIFF', key: 'number', src: 123, cmp: true},
       {tag: 'DIFF', key: 'boolean', src: true, cmp: null},
       {tag: 'SAME', key: 'null', src: null, cmp: null},
-      {tag: 'DIFF', key: 'something', src: {}, cmp: 'hello'}]);
+      {tag: 'DIFF', key: 'something', src: emptyObjectNode, cmp: 'hello'}]);
   });
 
   it('should invoke compare on child objects when field on srcJSON and cmpJSON both have object typing', () => {
@@ -62,7 +65,7 @@ describe('compare', () => {
     let outputNode = compare(srcJSON, cmpJSON);
 
     expect(outputNode.getFields()).toEqual([
-      {tag: 'SAME', key: 'object', src: new ObjectNode(), cmp: new ObjectNode()}]);
+      {tag: 'SAME', key: 'object', src: emptyObjectNodeWithIsTop, cmp: emptyObjectNodeWithIsTop}]);
   });
 
   it('should treat objects in array as the same', () => {

@@ -4,6 +4,7 @@ posting insecure data on remote websites to inspect differences in JSON. JDiff's
 TODO:
 - Add/Fix tests for node, jsonInput, pushTag, and compare classes
 - Handle scenario for top level arrayNode.
+- Remove need for use of isTop.
 - Style application UI.
 - Allow for dynamic treatment of JSON input
 - Include commas between object fields or array elements.
