@@ -10,7 +10,15 @@ class ArrayNode extends Node {
     this.array = [];
     this.nodeType = "ArrayNode";
   }
-  
+
+  includeTopLevelLeftBracket() {
+    return this.props.isTop ? "[" : null;
+  }
+
+  includeTopLevelRightBracket() {
+    return this.props.isTop ? "]" : null;
+  }
+
   getArray() {
     return this.array;
   }
@@ -46,16 +54,18 @@ class ArrayNode extends Node {
   }
 
   render() {
+    const padLeft = this.props.isTop ? {paddingLeft: "40px"} : {};
+
     const output = _.flatten(_.map(this.getArray(), (element) => {
       switch (element.tag) {
         case 'DIFF':
           return [
-            <li style={styles.removed} key={this.getId()}>
+            <li style={Object.assign({}, styles.removed, padLeft)} key={this.getId()}>
               {this.writeLeftBracket(element.src)}
                 {this.writeValue(element.src)}
               {this.writeRightBracket(element.src)}
             </li>,
-            <li style={styles.added} key={this.getId()}>
+            <li style={Object.assign({}, styles.added, padLeft)} key={this.getId()}>
               {this.writeLeftBracket(element.cmp)}
                 {this.writeValue(element.cmp)}
               {this.writeRightBracket(element.cmp)}
@@ -63,14 +73,14 @@ class ArrayNode extends Node {
           ];
         case 'SAME':
           return [
-            <li style={styles.same} key={this.getId()}>
+            <li style={Object.assign({}, styles.same, padLeft)} key={this.getId()}>
               {this.writeLeftBracket(element.src)}
                 {this.writeValue(element.src)}
               {this.writeRightBracket(element.src)}
             </li>];
         case 'POSITIVE':
           return [
-            <li style={styles.added} key={this.getId()}>
+            <li style={Object.assign({}, styles.added, padLeft)} key={this.getId()}>
               {this.writeLeftBracket(element.cmp)}
                 {this.writeValue(element.cmp)}
               {this.writeRightBracket(element.cmp)}
@@ -78,7 +88,7 @@ class ArrayNode extends Node {
           ];
         case 'NEGATIVE':
           return [
-            <li style={styles.removed} key={this.getId()}>
+            <li style={Object.assign({}, styles.removed, padLeft)} key={this.getId()}>
               {this.writeLeftBracket(element.src)}
                 {this.writeValue(element.src)}
               {this.writeRightBracket(element.src)}
@@ -89,7 +99,9 @@ class ArrayNode extends Node {
     }));
 
     return <ul style={styles.listContainer}>
+      {this.includeTopLevelLeftBracket()}
       {output}
+      {this.includeTopLevelRightBracket()}
     </ul>;
   }
 }

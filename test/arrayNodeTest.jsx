@@ -11,6 +11,31 @@ describe('ArrayNode', () => {
 
   describe('render', () => {
 
+    it('should render diff, same, negative, and positive with padding and top brackets', () => {
+      const wrapper = shallow(<ArrayNode pushTag={pushTag} isTop={true}/>);
+      let arrayNode = wrapper.instance();
+
+      arrayNode.pushDiffElem(1, 2);
+      arrayNode.pushSameElem(3);
+      arrayNode.pushByDifferenceInLength([], [4]);
+      arrayNode.pushByDifferenceInLength([5], []);
+      arrayNode.pushElement('NEGATIVE', 6);
+      arrayNode.pushElement('POSITIVE', 7);
+
+      const updatedWrapper = shallow(arrayNode.render());
+      expect(updatedWrapper.html()).toEqual('<ul style="list-style-type:none;">' +
+        '[' +
+          '<li style="background-color:#F47B7B;padding-left:40px;"><span style="color:blue;">1</span></li>' +
+          '<li style="background-color:#0EFF6A;padding-left:40px;"><span style="color:blue;">2</span></li>' +
+          '<li style="padding-left:40px;"><span style="color:blue;">3</span></li>' +
+          '<li style="background-color:#0EFF6A;padding-left:40px;"><span style="color:blue;">4</span></li>' +
+          '<li style="background-color:#F47B7B;padding-left:40px;"><span style="color:blue;">5</span></li>' +
+          '<li style="background-color:#F47B7B;padding-left:40px;"><span style="color:blue;">6</span></li>' +
+          '<li style="background-color:#0EFF6A;padding-left:40px;"><span style="color:blue;">7</span></li>' +
+        ']' +
+        '</ul>');
+    });
+
     it('should render diff, same, negative, and positive', () => {
       const wrapper = shallow(<ArrayNode pushTag={pushTag}/>);
       let arrayNode = wrapper.instance();

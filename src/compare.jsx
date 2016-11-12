@@ -6,8 +6,8 @@ import pushTag from './pushTag.jsx';
 
 import enumerateType from './enumerateType.jsx';
 
-const compareArrays = (srcArray, cmpArray) => {
-  let outputNode = new ArrayNode({pushTag: pushTag});
+const compareArrays = (srcArray, cmpArray, isTop) => {
+  let outputNode = new ArrayNode({pushTag: pushTag, isTop: isTop});
   let index = 0;
 
   for (; index < srcArray.length && index < cmpArray.length; index++) {
@@ -67,7 +67,23 @@ const compareObjects =  (src, cmp, isTop) => {
 };
 
 const compare = (src, cmp) => {
-  return compareObjects(src, cmp, true);
+  const srcType = enumerateType(src);
+  const cmpType = enumerateType(cmp);
+
+  if (srcType === cmpType) {
+    switch (srcType) {
+      case "OBJECT":
+        return compareObjects(src, cmp, true);
+      case "ARRAY":
+        return compareArrays(src, cmp, true);
+      default:
+        throw "Top JSON structure must be array or object.";
+    }
+  }
+
+  let arrayNode = new ArrayNode({pushTag: pushTag});
+  arrayNode.pushDiffElem(src, cmp);
+  return arrayNode;
 };
 
 module.exports = compare;
