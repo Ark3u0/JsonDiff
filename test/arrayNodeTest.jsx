@@ -25,12 +25,12 @@ describe('ArrayNode', () => {
       const updatedWrapper = shallow(arrayNode.render());
       expect(updatedWrapper.html()).toEqual('<ul style="list-style-type:none;">' +
         '[' +
-          '<li style="background-color:#F47B7B;padding-left:40px;"><span style="color:blue;">1</span></li>' +
-          '<li style="background-color:#0EFF6A;padding-left:40px;"><span style="color:blue;">2</span></li>' +
-          '<li style="padding-left:40px;"><span style="color:blue;">3</span></li>' +
-          '<li style="background-color:#0EFF6A;padding-left:40px;"><span style="color:blue;">4</span></li>' +
-          '<li style="background-color:#F47B7B;padding-left:40px;"><span style="color:blue;">5</span></li>' +
-          '<li style="background-color:#F47B7B;padding-left:40px;"><span style="color:blue;">6</span></li>' +
+          '<li style="background-color:#F47B7B;padding-left:40px;"><span style="color:blue;">1</span>,</li>' +
+          '<li style="background-color:#0EFF6A;padding-left:40px;"><span style="color:blue;">2</span>,</li>' +
+          '<li style="padding-left:40px;"><span style="color:blue;">3</span>,</li>' +
+          '<li style="background-color:#0EFF6A;padding-left:40px;"><span style="color:blue;">4</span>,</li>' +
+          '<li style="background-color:#F47B7B;padding-left:40px;"><span style="color:blue;">5</span>,</li>' +
+          '<li style="background-color:#F47B7B;padding-left:40px;"><span style="color:blue;">6</span>,</li>' +
           '<li style="background-color:#0EFF6A;padding-left:40px;"><span style="color:blue;">7</span></li>' +
         ']' +
         '</ul>');
@@ -49,12 +49,12 @@ describe('ArrayNode', () => {
 
       const updatedWrapper = shallow(arrayNode.render());
       expect(updatedWrapper.html()).toEqual('<ul style="list-style-type:none;">' +
-        '<li style="background-color:#F47B7B;"><span style="color:blue;">1</span></li>' +
-        '<li style="background-color:#0EFF6A;"><span style="color:blue;">2</span></li>' +
-        '<li><span style="color:blue;">3</span></li>' +
-        '<li style="background-color:#0EFF6A;"><span style="color:blue;">4</span></li>' +
-        '<li style="background-color:#F47B7B;"><span style="color:blue;">5</span></li>' +
-        '<li style="background-color:#F47B7B;"><span style="color:blue;">6</span></li>' +
+        '<li style="background-color:#F47B7B;"><span style="color:blue;">1</span>,</li>' +
+        '<li style="background-color:#0EFF6A;"><span style="color:blue;">2</span>,</li>' +
+        '<li><span style="color:blue;">3</span>,</li>' +
+        '<li style="background-color:#0EFF6A;"><span style="color:blue;">4</span>,</li>' +
+        '<li style="background-color:#F47B7B;"><span style="color:blue;">5</span>,</li>' +
+        '<li style="background-color:#F47B7B;"><span style="color:blue;">6</span>,</li>' +
         '<li style="background-color:#0EFF6A;"><span style="color:blue;">7</span></li>' +
       '</ul>');
     });

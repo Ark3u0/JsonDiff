@@ -27,10 +27,10 @@ describe('ObjectNode', () => {
       const updatedWrapper = shallow(objectNode.render());
       expect(updatedWrapper.html()).toEqual('<ul style="list-style-type:none;">' +
         '{' +
-          '<li style="padding-left:40px;">same: <span style="color:blue;">1</span></li>' +
-          '<li style="background-color:#F47B7B;padding-left:40px;">negative: <span style="color:blue;">2</span></li>' +
-          '<li style="background-color:#F47B7B;padding-left:40px;">diff: <span style="color:blue;">3</span></li>' +
-          '<li style="background-color:#0EFF6A;padding-left:40px;">diff: <span style="color:blue;">4</span></li>' +
+          '<li style="padding-left:40px;">same: <span style="color:blue;">1</span>,</li>' +
+          '<li style="background-color:#F47B7B;padding-left:40px;">negative: <span style="color:blue;">2</span>,</li>' +
+          '<li style="background-color:#F47B7B;padding-left:40px;">diff: <span style="color:blue;">3</span>,</li>' +
+          '<li style="background-color:#0EFF6A;padding-left:40px;">diff: <span style="color:blue;">4</span>,</li>' +
           '<li style="background-color:#0EFF6A;padding-left:40px;">positive: <span style="color:blue;">5</span></li>' +
         '}' +
         '</ul>');
@@ -47,10 +47,10 @@ describe('ObjectNode', () => {
 
       const updatedWrapper = shallow(objectNode.render());
       expect(updatedWrapper.html()).toEqual('<ul style="list-style-type:none;">' +
-          '<li>same: <span style="color:blue;">1</span></li>' +
-          '<li style="background-color:#F47B7B;">negative: <span style="color:blue;">2</span></li>' +
-          '<li style="background-color:#F47B7B;">diff: <span style="color:blue;">3</span></li>' +
-          '<li style="background-color:#0EFF6A;">diff: <span style="color:blue;">4</span></li>' +
+          '<li>same: <span style="color:blue;">1</span>,</li>' +
+          '<li style="background-color:#F47B7B;">negative: <span style="color:blue;">2</span>,</li>' +
+          '<li style="background-color:#F47B7B;">diff: <span style="color:blue;">3</span>,</li>' +
+          '<li style="background-color:#0EFF6A;">diff: <span style="color:blue;">4</span>,</li>' +
           '<li style="background-color:#0EFF6A;">positive: <span style="color:blue;">5</span></li>' +
         '</ul>');
     });

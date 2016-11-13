@@ -55,35 +55,41 @@ class ObjectNode extends Node {
       });
   }
 
-  frameField(key, field, styles) {
+  isLastFieldInObjectNode(index) {
+    return this.getFields().length - 1 === index;
+  }
+
+  frameField(key, field, styles, index) {
     const padLeft = this.props.isTop ? {paddingLeft: "40px"} : {};
+    const commaOnElement = this.isLastFieldInObjectNode(index) ? null : ",";
 
     return <li style={Object.assign({}, styles, padLeft)} key={this.getId()}>
       {String(key)}: {this.writeLeftBracket(field)}
       {this.writeValue(field)}
       {this.writeRightBracket(field)}
+      {commaOnElement}
     </li>
   }
 
   render() {
-    const output = _.flatten(_.map(this.getFields(), (field) => {
+    const output = _.flatten(_.map(this.getFields(), (field, index) => {
       switch (field.tag) {
         case 'DIFF':
           return [
-            this.frameField(field.key, field.src, styles.removed),
-            this.frameField(field.key, field.cmp, styles.added)
+            this.frameField(field.key, field.src, styles.removed, index),
+            this.frameField(field.key, field.cmp, styles.added, index)
           ];
         case 'SAME':
           return [
-            this.frameField(field.key, field.src, styles.same)
+            this.frameField(field.key, field.src, styles.same, index)
           ];
         case 'POSITIVE':
           return [
-            this.frameField(field.key, field.cmp, styles.added)
+            this.frameField(field.key, field.cmp, styles.added, index)
           ];
         case 'NEGATIVE':
           return [
-            this.frameField(field.key, field.src, styles.removed)
+            this.frameField(field.key, field.src, styles.removed, index)
           ];
         default:
           return [];

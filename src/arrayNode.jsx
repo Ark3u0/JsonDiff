@@ -53,35 +53,41 @@ class ArrayNode extends Node {
     }
   }
 
-  frameElement(element, styles) {
+  isLastElementInArrayNode(index) {
+    return this.getArray().length - 1 === index;
+  }
+
+  frameElement(element, styles, index) {
     const padLeft = this.props.isTop ? {paddingLeft: "40px"} : {};
+    const commaOnElement = this.isLastElementInArrayNode(index) ? null : ",";
 
     return <li style={Object.assign({}, styles, padLeft)} key={this.getId()}>
       {this.writeLeftBracket(element)}
         {this.writeValue(element)}
       {this.writeRightBracket(element)}
+      {commaOnElement}
     </li>
   }
 
   render() {
-    const output = _.flatten(_.map(this.getArray(), (element) => {
+    const output = _.flatten(_.map(this.getArray(), (element, index) => {
       switch (element.tag) {
         case 'DIFF':
           return [
-            this.frameElement(element.src, styles.removed),
-            this.frameElement(element.cmp, styles.added)
+            this.frameElement(element.src, styles.removed, index),
+            this.frameElement(element.cmp, styles.added, index)
           ];
         case 'SAME':
           return [
-            this.frameElement(element.src, styles.same)
+            this.frameElement(element.src, styles.same, index)
           ];
         case 'POSITIVE':
           return [
-            this.frameElement(element.cmp, styles.added)
+            this.frameElement(element.cmp, styles.added, index)
           ];
         case 'NEGATIVE':
           return [
-            this.frameElement(element.src, styles.removed)
+            this.frameElement(element.src, styles.removed, index)
           ];
         default:
           return [];

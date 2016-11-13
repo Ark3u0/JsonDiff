@@ -25,45 +25,45 @@ describe("endToEndTest", () => {
         '<div id="output">' +
           '<div style="font-weight:bold;">Output:</div>' +
           '<ul style="list-style-type:none;">{' +
-            '<li style="background-color:#F47B7B;padding-left:40px;">field_different: <span style="font-weight:bold;color:green;">&quot;one thing&quot;</span></li>' +
-            '<li style="background-color:#0EFF6A;padding-left:40px;">field_different: <span style="font-weight:bold;color:green;">&quot;another thing&quot;</span></li>' +
-            '<li style="background-color:#F47B7B;padding-left:40px;">field_negative: <span style="color:blue;">2</span></li>' +
-            '<li style="padding-left:40px;">field_same: <span style="font-weight:bold;color:purple;">null</span></li>' +
+            '<li style="background-color:#F47B7B;padding-left:40px;">field_different: <span style="font-weight:bold;color:green;">&quot;one thing&quot;</span>,</li>' +
+            '<li style="background-color:#0EFF6A;padding-left:40px;">field_different: <span style="font-weight:bold;color:green;">&quot;another thing&quot;</span>,</li>' +
+            '<li style="background-color:#F47B7B;padding-left:40px;">field_negative: <span style="color:blue;">2</span>,</li>' +
+            '<li style="padding-left:40px;">field_same: <span style="font-weight:bold;color:purple;">null</span>,</li>' +
             '<li style="padding-left:40px;">object_same: {' +
               '<ul style="list-style-type:none;">' +
-                '<li style="background-color:#F47B7B;">field_different: <span style="font-weight:bold;color:green;">&quot;one thing&quot;</span></li>' +
-                '<li style="background-color:#0EFF6A;">field_different: <span style="font-weight:bold;color:green;">&quot;another thing&quot;</span></li>' +
-                '<li style="background-color:#F47B7B;">field_negative: <span style="color:blue;">2</span></li>' +
-                '<li>field_same: <span style="font-weight:bold;color:purple;">null</span></li>' +
+                '<li style="background-color:#F47B7B;">field_different: <span style="font-weight:bold;color:green;">&quot;one thing&quot;</span>,</li>' +
+                '<li style="background-color:#0EFF6A;">field_different: <span style="font-weight:bold;color:green;">&quot;another thing&quot;</span>,</li>' +
+                '<li style="background-color:#F47B7B;">field_negative: <span style="color:blue;">2</span>,</li>' +
+                '<li>field_same: <span style="font-weight:bold;color:purple;">null</span>,</li>' +
                 '<li style="background-color:#0EFF6A;">field_positive: <span style="font-weight:bold;color:blue;">true</span></li>' +
-              '</ul>}' +
+              '</ul>},' +
             '</li>' +
             '<li style="padding-left:40px;">array_same: [' +
               '<ul style="list-style-type:none;">' +
-                '<li><span style="font-weight:bold;color:green;">&quot;same&quot;</span></li>' +
-                '<li style="background-color:#F47B7B;"><span style="font-weight:bold;color:green;">&quot;different1&quot;</span></li>' +
-                '<li style="background-color:#0EFF6A;"><span style="font-weight:bold;color:green;">&quot;different2&quot;</span></li>' +
+                '<li><span style="font-weight:bold;color:green;">&quot;same&quot;</span>,</li>' +
+                '<li style="background-color:#F47B7B;"><span style="font-weight:bold;color:green;">&quot;different1&quot;</span>,</li>' +
+                '<li style="background-color:#0EFF6A;"><span style="font-weight:bold;color:green;">&quot;different2&quot;</span>,</li>' +
                 '<li style="background-color:#0EFF6A;"><span style="font-weight:bold;color:green;">&quot;added&quot;</span></li>' +
-              '</ul>]' +
+              '</ul>],' +
             '</li>' +
-            '<li style="background-color:#0EFF6A;padding-left:40px;">field_positive: <span style="font-weight:bold;color:blue;">true</span></li>' +
+            '<li style="background-color:#0EFF6A;padding-left:40px;">field_positive: <span style="font-weight:bold;color:blue;">true</span>,</li>' +
             '<li style="background-color:#0EFF6A;padding-left:40px;">object_different: {' +
               '<ul style="list-style-type:none;">' +
-                '<li style="background-color:#0EFF6A;">array: []' +
+                '<li style="background-color:#0EFF6A;">array: [],' +
                 '</li>' +
-                '<li style="background-color:#0EFF6A;">object: {}' +
+                '<li style="background-color:#0EFF6A;">object: {},' +
                 '</li>' +
                 '<li style="background-color:#0EFF6A;">number: <span style="color:blue;">123</span></li>' +
-              '</ul>}' +
+              '</ul>},' +
             '</li>' +
             '<li style="background-color:#0EFF6A;padding-left:40px;">array_different: [' +
               '<ul style="list-style-type:none;">' +
-                '<li style="background-color:#0EFF6A;"><span style="color:blue;">123</span></li>' +
-                '<li style="background-color:#0EFF6A;">[]' +
+                '<li style="background-color:#0EFF6A;"><span style="color:blue;">123</span>,</li>' +
+                '<li style="background-color:#0EFF6A;">[],' +
                 '</li>' +
                 '<li style="background-color:#0EFF6A;">{}' +
                 '</li>' +
-            '</ul>]' +
+              '</ul>]' +
           '</li>}' +
         '</ul>' +
       '</div>' +
