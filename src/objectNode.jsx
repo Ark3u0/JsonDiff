@@ -55,47 +55,35 @@ class ObjectNode extends Node {
       });
   }
 
-  render() {
+  frameField(key, field, styles) {
     const padLeft = this.props.isTop ? {paddingLeft: "40px"} : {};
 
+    return <li style={Object.assign({}, styles, padLeft)} key={this.getId()}>
+      {String(key)}: {this.writeLeftBracket(field)}
+      {this.writeValue(field)}
+      {this.writeRightBracket(field)}
+    </li>
+  }
+
+  render() {
     const output = _.flatten(_.map(this.getFields(), (field) => {
       switch (field.tag) {
         case 'DIFF':
           return [
-            <li style={Object.assign({}, styles.removed, padLeft)} key={this.getId()}>
-              {String(field.key)}: {this.writeLeftBracket(field.src)}
-                {this.writeValue(field.src)}
-              {this.writeRightBracket(field.src)}
-            </li>,
-            <li style={Object.assign({}, styles.added, padLeft)} key={this.getId()}>
-              {String(field.key)}: {this.writeLeftBracket(field.cmp)}
-                {this.writeValue(field.cmp)}
-              {this.writeRightBracket(field.cmp)}
-            </li>
+            this.frameField(field.key, field.src, styles.removed),
+            this.frameField(field.key, field.cmp, styles.added)
           ];
         case 'SAME':
           return [
-            <li style={Object.assign({}, styles.same, padLeft)} key={this.getId()}>
-              {String(field.key)}: {this.writeLeftBracket(field.src)}
-                {this.writeValue(field.src)}
-              {this.writeRightBracket(field.src)}
-            </li>
+            this.frameField(field.key, field.src, styles.same)
           ];
         case 'POSITIVE':
           return [
-            <li style={Object.assign({}, styles.added, padLeft)} key={this.getId()}>
-              {String(field.key)}: {this.writeLeftBracket(field.cmp)}
-                {this.writeValue(field.cmp)}
-              {this.writeRightBracket(field.cmp)}
-            </li>
+            this.frameField(field.key, field.cmp, styles.added)
           ];
         case 'NEGATIVE':
           return [
-            <li style={Object.assign({}, styles.removed, padLeft)} key={this.getId()}>
-              {String(field.key)}: {this.writeLeftBracket(field.src)}
-                {this.writeValue(field.src)}
-              {this.writeRightBracket(field.src)}
-            </li>
+            this.frameField(field.key, field.src, styles.removed)
           ];
         default:
           return [];

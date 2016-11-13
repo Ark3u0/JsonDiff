@@ -49,13 +49,9 @@ describe("endToEndTest", () => {
             '<li style="background-color:#0EFF6A;padding-left:40px;">field_positive: <span style="font-weight:bold;color:blue;">true</span></li>' +
             '<li style="background-color:#0EFF6A;padding-left:40px;">object_different: {' +
               '<ul style="list-style-type:none;">' +
-                '<li style="background-color:#0EFF6A;">array: [' +
-                  '<ul style="list-style-type:none;">' +
-                  '</ul>]' +
+                '<li style="background-color:#0EFF6A;">array: []' +
                 '</li>' +
-                '<li style="background-color:#0EFF6A;">object: {' +
-                  '<ul style="list-style-type:none;">' +
-                  '</ul>}' +
+                '<li style="background-color:#0EFF6A;">object: {}' +
                 '</li>' +
                 '<li style="background-color:#0EFF6A;">number: <span style="color:blue;">123</span></li>' +
               '</ul>}' +
@@ -63,17 +59,14 @@ describe("endToEndTest", () => {
             '<li style="background-color:#0EFF6A;padding-left:40px;">array_different: [' +
               '<ul style="list-style-type:none;">' +
                 '<li style="background-color:#0EFF6A;"><span style="color:blue;">123</span></li>' +
-                '<li style="background-color:#0EFF6A;">[<ul style="list-style-type:none;">' +
-              '</ul>]' +
-            '</li>' +
-            '<li style="background-color:#0EFF6A;">{' +
-              '<ul style="list-style-type:none;">' +
-              '</ul>}' +
-            '</li>' +
-          '</ul>]' +
-        '</li>}' +
-      '</ul>' +
-    '</div>' +
+                '<li style="background-color:#0EFF6A;">[]' +
+                '</li>' +
+                '<li style="background-color:#0EFF6A;">{}' +
+                '</li>' +
+            '</ul>]' +
+          '</li>}' +
+        '</ul>' +
+      '</div>' +
     '</div>');
   });
 });

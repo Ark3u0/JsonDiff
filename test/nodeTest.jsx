@@ -28,11 +28,12 @@ describe('Node', () => {
       expect(wrapper.html()).toEqual('<span style="color:blue;">123</span>')
     });
 
-    it('should call render on an object node', () => {
+    it('should call render on an object node with fields', () => {
       let node = new Node();
       let objectNode = {
         render: () => {},
-        nodeType: "ObjectNode"
+        nodeType: "ObjectNode",
+        getFields: () => { return ["length_greater_than_0"]; }
       };
 
       spyOn(objectNode, 'render');
@@ -41,17 +42,46 @@ describe('Node', () => {
       expect(objectNode.render).toHaveBeenCalled();
     });
 
+    it('should return null when writing an object node without fields', () => {
+      let node = new Node();
+      let objectNode = {
+        render: () => {},
+        nodeType: "ObjectNode",
+        getFields: () => { return []; }
+      };
+
+      spyOn(objectNode, 'render');
+
+      expect(node.writeValue(objectNode)).toEqual(null);
+      expect(objectNode.render).not.toHaveBeenCalled();
+    });
+
     it('should call render on an array node', () => {
       let node = new Node();
       let arrayNode = {
         render: () => {},
-        nodeType: "ArrayNode"
+        nodeType: "ArrayNode",
+        getArray: () => { return ["length_greater_than_0"]; }
       };
 
       spyOn(arrayNode, 'render');
 
       node.writeValue(arrayNode);
       expect(arrayNode.render).toHaveBeenCalled();
+    });
+
+    it('should return null when writing an array node without elements', () => {
+      let node = new Node();
+      let arrayNode = {
+        render: () => {},
+        nodeType: "ArrayNode",
+        getArray: () => { return []; }
+      };
+
+      spyOn(arrayNode, 'render');
+
+      expect(node.writeValue(arrayNode)).toEqual(null);
+      expect(arrayNode.render).not.toHaveBeenCalled();
     });
   });
 

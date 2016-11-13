@@ -8,8 +8,10 @@ let ID = 1;
 
 class Node extends Component {
   writeValue(value) {
-    if (value !== null && (value.nodeType === "ObjectNode" || value.nodeType === "ArrayNode")) {
-      return value.render();
+    if (value !== null && value.nodeType === "ObjectNode") {
+      return (value.getFields().length === 0) ? null : value.render();
+    } else if (value !== null && value.nodeType === "ArrayNode") {
+      return (value.getArray().length === 0) ? null : value.render();
     } else {
       const type = enumerateType(value);
       switch (type) {

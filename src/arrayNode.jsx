@@ -53,46 +53,36 @@ class ArrayNode extends Node {
     }
   }
 
-  render() {
+  frameElement(element, styles) {
     const padLeft = this.props.isTop ? {paddingLeft: "40px"} : {};
 
+    return <li style={Object.assign({}, styles, padLeft)} key={this.getId()}>
+      {this.writeLeftBracket(element)}
+        {this.writeValue(element)}
+      {this.writeRightBracket(element)}
+    </li>
+  }
+
+  render() {
     const output = _.flatten(_.map(this.getArray(), (element) => {
       switch (element.tag) {
         case 'DIFF':
           return [
-            <li style={Object.assign({}, styles.removed, padLeft)} key={this.getId()}>
-              {this.writeLeftBracket(element.src)}
-                {this.writeValue(element.src)}
-              {this.writeRightBracket(element.src)}
-            </li>,
-            <li style={Object.assign({}, styles.added, padLeft)} key={this.getId()}>
-              {this.writeLeftBracket(element.cmp)}
-                {this.writeValue(element.cmp)}
-              {this.writeRightBracket(element.cmp)}
-            </li>
+            this.frameElement(element.src, styles.removed),
+            this.frameElement(element.cmp, styles.added)
           ];
         case 'SAME':
           return [
-            <li style={Object.assign({}, styles.same, padLeft)} key={this.getId()}>
-              {this.writeLeftBracket(element.src)}
-                {this.writeValue(element.src)}
-              {this.writeRightBracket(element.src)}
-            </li>];
+            this.frameElement(element.src, styles.same)
+          ];
         case 'POSITIVE':
           return [
-            <li style={Object.assign({}, styles.added, padLeft)} key={this.getId()}>
-              {this.writeLeftBracket(element.cmp)}
-                {this.writeValue(element.cmp)}
-              {this.writeRightBracket(element.cmp)}
-            </li>
+            this.frameElement(element.cmp, styles.added)
           ];
         case 'NEGATIVE':
           return [
-            <li style={Object.assign({}, styles.removed, padLeft)} key={this.getId()}>
-              {this.writeLeftBracket(element.src)}
-                {this.writeValue(element.src)}
-              {this.writeRightBracket(element.src)}
-            </li>];
+            this.frameElement(element.src, styles.removed)
+          ];
         default:
           return [];
       }
