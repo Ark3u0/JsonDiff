@@ -59,11 +59,11 @@ class ObjectNode extends Node {
     return this.getFields().length - 1 === index;
   }
 
-  frameField(key, field, styles, index) {
+  frameField(key, field, className, index) {
     const padLeft = this.props.isTop ? {paddingLeft: "40px"} : {};
     const commaOnElement = this.isLastFieldInObjectNode(index) ? null : ",";
 
-    return <li style={Object.assign({}, styles, padLeft)} key={this.getId()}>
+    return <li className={className} style={padLeft} key={this.getId()}>
       {String(key)}: {this.writeLeftBracket(field)}
       {this.writeValue(field)}
       {this.writeRightBracket(field)}
@@ -76,26 +76,26 @@ class ObjectNode extends Node {
       switch (field.tag) {
         case 'DIFF':
           return [
-            this.frameField(field.key, field.src, styles.removed, index),
-            this.frameField(field.key, field.cmp, styles.added, index)
+            this.frameField(field.key, field.src, "removed", index),
+            this.frameField(field.key, field.cmp, "added", index)
           ];
         case 'SAME':
           return [
-            this.frameField(field.key, field.src, styles.same, index)
+            this.frameField(field.key, field.src, "same", index)
           ];
         case 'POSITIVE':
           return [
-            this.frameField(field.key, field.cmp, styles.added, index)
+            this.frameField(field.key, field.cmp, "added", index)
           ];
         case 'NEGATIVE':
           return [
-            this.frameField(field.key, field.src, styles.removed, index)
+            this.frameField(field.key, field.src, "removed", index)
           ];
         default:
           return [];
       }
     }));
-    return <ul style={styles.listContainer}>
+    return <ul>
       {this.includeTopLevelLeftBracket()}
       {output}
       {this.includeTopLevelRightBracket()}
@@ -104,16 +104,3 @@ class ObjectNode extends Node {
 }
 
 module.exports = ObjectNode;
-
-const styles = {
-  removed: {
-    backgroundColor: "#F47B7B"
-  },
-  added: {
-    backgroundColor: "#0EFF6A"
-  },
-  same: {},
-  listContainer: {
-    listStyleType: "none"
-  }
-};

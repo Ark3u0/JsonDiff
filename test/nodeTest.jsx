@@ -7,25 +7,25 @@ describe('Node', () => {
     it('should write an escaped string and style it bold green', () => {
       let node = new Node();
       const wrapper = shallow(node.writeValue("a string"));
-      expect(wrapper.html()).toEqual('<span style="font-weight:bold;color:green;">&quot;a string&quot;</span>')
+      expect(wrapper.html()).toEqual('<span class="string">&quot;a string&quot;</span>')
     });
 
     it('should write a boolean and style it bold blue', () => {
       let node = new Node();
       const wrapper = shallow(node.writeValue(true));
-      expect(wrapper.html()).toEqual('<span style="font-weight:bold;color:blue;">true</span>')
+      expect(wrapper.html()).toEqual('<span class="boolean">true</span>')
     });
 
     it('should write a null and style it bold purple', () => {
       let node = new Node();
       const wrapper = shallow(node.writeValue(null));
-      expect(wrapper.html()).toEqual('<span style="font-weight:bold;color:purple;">null</span>')
+      expect(wrapper.html()).toEqual('<span class="null">null</span>')
     });
 
     it('should write a number and style it blue', () => {
       let node = new Node();
       const wrapper = shallow(node.writeValue(123));
-      expect(wrapper.html()).toEqual('<span style="color:blue;">123</span>')
+      expect(wrapper.html()).toEqual('<span class="number">123</span>')
     });
 
     it('should call render on an object node with fields', () => {

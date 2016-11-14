@@ -30,7 +30,7 @@ class DiffOutput extends Component {
       : null;
 
     return <div id="output">
-      <div style={{fontWeight: "bold"}}>Output:</div>
+      <div className="outputHeader">Output:</div>
       {diff}
     </div>
   }

@@ -23,15 +23,15 @@ describe('ArrayNode', () => {
       arrayNode.pushElement('POSITIVE', 7);
 
       const updatedWrapper = shallow(arrayNode.render());
-      expect(updatedWrapper.html()).toEqual('<ul style="list-style-type:none;">' +
+      expect(updatedWrapper.html()).toEqual('<ul>' +
         '[' +
-          '<li style="background-color:#F47B7B;padding-left:40px;"><span style="color:blue;">1</span>,</li>' +
-          '<li style="background-color:#0EFF6A;padding-left:40px;"><span style="color:blue;">2</span>,</li>' +
-          '<li style="padding-left:40px;"><span style="color:blue;">3</span>,</li>' +
-          '<li style="background-color:#0EFF6A;padding-left:40px;"><span style="color:blue;">4</span>,</li>' +
-          '<li style="background-color:#F47B7B;padding-left:40px;"><span style="color:blue;">5</span>,</li>' +
-          '<li style="background-color:#F47B7B;padding-left:40px;"><span style="color:blue;">6</span>,</li>' +
-          '<li style="background-color:#0EFF6A;padding-left:40px;"><span style="color:blue;">7</span></li>' +
+          '<li class="removed" style="padding-left:40px;"><span class="number">1</span>,</li>' +
+          '<li class="added" style="padding-left:40px;"><span class="number">2</span>,</li>' +
+          '<li class="same" style="padding-left:40px;"><span class="number">3</span>,</li>' +
+          '<li class="added" style="padding-left:40px;"><span class="number">4</span>,</li>' +
+          '<li class="removed" style="padding-left:40px;"><span class="number">5</span>,</li>' +
+          '<li class="removed" style="padding-left:40px;"><span class="number">6</span>,</li>' +
+          '<li class="added" style="padding-left:40px;"><span class="number">7</span></li>' +
         ']' +
         '</ul>');
     });
@@ -48,14 +48,14 @@ describe('ArrayNode', () => {
       arrayNode.pushElement('POSITIVE', 7);
 
       const updatedWrapper = shallow(arrayNode.render());
-      expect(updatedWrapper.html()).toEqual('<ul style="list-style-type:none;">' +
-        '<li style="background-color:#F47B7B;"><span style="color:blue;">1</span>,</li>' +
-        '<li style="background-color:#0EFF6A;"><span style="color:blue;">2</span>,</li>' +
-        '<li><span style="color:blue;">3</span>,</li>' +
-        '<li style="background-color:#0EFF6A;"><span style="color:blue;">4</span>,</li>' +
-        '<li style="background-color:#F47B7B;"><span style="color:blue;">5</span>,</li>' +
-        '<li style="background-color:#F47B7B;"><span style="color:blue;">6</span>,</li>' +
-        '<li style="background-color:#0EFF6A;"><span style="color:blue;">7</span></li>' +
+      expect(updatedWrapper.html()).toEqual('<ul>' +
+        '<li class="removed"><span class="number">1</span>,</li>' +
+        '<li class="added"><span class="number">2</span>,</li>' +
+        '<li class="same"><span class="number">3</span>,</li>' +
+        '<li class="added"><span class="number">4</span>,</li>' +
+        '<li class="removed"><span class="number">5</span>,</li>' +
+        '<li class="removed"><span class="number">6</span>,</li>' +
+        '<li class="added"><span class="number">7</span></li>' +
       '</ul>');
     });
 

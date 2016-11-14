@@ -1,0 +1,49 @@
+// Misc styling
+
+.outputHeader {
+  font-weight: bold;
+}
+
+.errorMessage {
+  font-weight: bold;
+  color: red;
+}
+
+// List styling
+
+ul {
+  list-style-type: none;
+}
+
+// Diff styling
+
+.removed {
+  background-color: #F47B7B;
+}
+
+.added {
+  background-color: #0EFF6A;
+}
+
+.same {}
+
+//Primitive Type styling
+
+.string {
+    font-weight: bold;
+    color: green;
+}
+
+.boolean {
+  font-weight: bold;
+  color: blue;
+}
+
+.null {
+  font-weight: bold;
+  color: purple;
+}
+
+.number {
+  color: blue;
+}

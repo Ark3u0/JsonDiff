@@ -17,6 +17,10 @@ var generateWebpackConfig = function(env) {
           query: {
             presets: ['es2015', 'react', 'airbnb']
           }
+        },
+        {
+          test: /\.scss$/,
+          loaders: ['style', 'css', 'sass']
         }
       ]
     };

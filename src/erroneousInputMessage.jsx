@@ -8,17 +8,10 @@ class ErroneousInputMessage extends Component {
     super(props);
   }
   render() {
-    return <div style={styles.errorMessage}>
+    return <div className="errorMessage">
       {this.props.inputToBeDefined === undefined ? this.props.errorMessage : null}
     </div>
   }
 }
-
-const styles = {
-  errorMessage: {
-    color: 'red',
-    fontWeight: 'bold'
-  }
-};
 
 module.exports = ErroneousInputMessage;

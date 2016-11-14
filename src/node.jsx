@@ -16,13 +16,13 @@ class Node extends Component {
       const type = enumerateType(value);
       switch (type) {
         case "STRING":
-          return <span style={styles.string}>{"\"" + String(value) + "\""}</span>;
+          return <span className="string">{"\"" + String(value) + "\""}</span>;
         case "BOOLEAN":
-          return <span style={styles.boolean}>{String(value)}</span>;
+          return <span className="boolean">{String(value)}</span>;
         case "NUMBER":
-          return <span style={styles.number}>{String(value)}</span>;
+          return <span className="number">{String(value)}</span>;
         case "NULL":
-          return <span style={styles.null}>{String(value)}</span>;
+          return <span className="null">{String(value)}</span>;
         default:
           throw "Attempting to render value that is not a defined type.";
       }
@@ -53,23 +53,5 @@ class Node extends Component {
     return ID++;
   }
 }
-
-const styles = {
-  string: {
-    fontWeight: "bold",
-    color: "green"
-  },
-  boolean: {
-    fontWeight: "bold",
-    color: "blue"
-  },
-  null: {
-    fontWeight: "bold",
-    color: "purple"
-  },
-  number: {
-    color: "blue"
-  }
-};
 
 module.exports = Node;

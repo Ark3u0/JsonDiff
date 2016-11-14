@@ -12,7 +12,7 @@ describe('ObjectNode', () => {
   describe('render', () => {
     it('should render an empty list', () => {
       const wrapper = shallow(<ObjectNode pushTag={pushTag}/>);
-      expect(wrapper.html()).toEqual('<ul style="list-style-type:none;"></ul>');
+      expect(wrapper.html()).toEqual('<ul></ul>');
     });
 
     it('should render diff, same, negative, and positive with padding and top brackets', () => {
@@ -25,13 +25,13 @@ describe('ObjectNode', () => {
       objectNode.addFieldPositives({}, {positive: 5});
 
       const updatedWrapper = shallow(objectNode.render());
-      expect(updatedWrapper.html()).toEqual('<ul style="list-style-type:none;">' +
+      expect(updatedWrapper.html()).toEqual('<ul>' +
         '{' +
-          '<li style="padding-left:40px;">same: <span style="color:blue;">1</span>,</li>' +
-          '<li style="background-color:#F47B7B;padding-left:40px;">negative: <span style="color:blue;">2</span>,</li>' +
-          '<li style="background-color:#F47B7B;padding-left:40px;">diff: <span style="color:blue;">3</span>,</li>' +
-          '<li style="background-color:#0EFF6A;padding-left:40px;">diff: <span style="color:blue;">4</span>,</li>' +
-          '<li style="background-color:#0EFF6A;padding-left:40px;">positive: <span style="color:blue;">5</span></li>' +
+          '<li class="same" style="padding-left:40px;">same: <span class="number">1</span>,</li>' +
+          '<li class="removed" style="padding-left:40px;">negative: <span class="number">2</span>,</li>' +
+          '<li class="removed" style="padding-left:40px;">diff: <span class="number">3</span>,</li>' +
+          '<li class="added" style="padding-left:40px;">diff: <span class="number">4</span>,</li>' +
+          '<li class="added" style="padding-left:40px;">positive: <span class="number">5</span></li>' +
         '}' +
         '</ul>');
     });
@@ -46,12 +46,12 @@ describe('ObjectNode', () => {
       objectNode.addFieldPositives({}, {positive: 5});
 
       const updatedWrapper = shallow(objectNode.render());
-      expect(updatedWrapper.html()).toEqual('<ul style="list-style-type:none;">' +
-          '<li>same: <span style="color:blue;">1</span>,</li>' +
-          '<li style="background-color:#F47B7B;">negative: <span style="color:blue;">2</span>,</li>' +
-          '<li style="background-color:#F47B7B;">diff: <span style="color:blue;">3</span>,</li>' +
-          '<li style="background-color:#0EFF6A;">diff: <span style="color:blue;">4</span>,</li>' +
-          '<li style="background-color:#0EFF6A;">positive: <span style="color:blue;">5</span></li>' +
+      expect(updatedWrapper.html()).toEqual('<ul>' +
+          '<li class="same">same: <span class="number">1</span>,</li>' +
+          '<li class="removed">negative: <span class="number">2</span>,</li>' +
+          '<li class="removed">diff: <span class="number">3</span>,</li>' +
+          '<li class="added">diff: <span class="number">4</span>,</li>' +
+          '<li class="added">positive: <span class="number">5</span></li>' +
         '</ul>');
     });
   });

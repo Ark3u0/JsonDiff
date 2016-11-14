@@ -1,4 +1,5 @@
 import React from 'react';
+import StyleSheet from './master.scss';
 
 import JSONInput from './jsonInput.jsx';
 import DiffOutput from './diffOutput.jsx'

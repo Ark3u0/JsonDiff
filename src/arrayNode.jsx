@@ -57,11 +57,11 @@ class ArrayNode extends Node {
     return this.getArray().length - 1 === index;
   }
 
-  frameElement(element, styles, index) {
+  frameElement(element, className, index) {
     const padLeft = this.props.isTop ? {paddingLeft: "40px"} : {};
     const commaOnElement = this.isLastElementInArrayNode(index) ? null : ",";
 
-    return <li style={Object.assign({}, styles, padLeft)} key={this.getId()}>
+    return <li className={className} style={padLeft} key={this.getId()}>
       {this.writeLeftBracket(element)}
         {this.writeValue(element)}
       {this.writeRightBracket(element)}
@@ -74,27 +74,27 @@ class ArrayNode extends Node {
       switch (element.tag) {
         case 'DIFF':
           return [
-            this.frameElement(element.src, styles.removed, index),
-            this.frameElement(element.cmp, styles.added, index)
+            this.frameElement(element.src, "removed", index),
+            this.frameElement(element.cmp, "added", index)
           ];
         case 'SAME':
           return [
-            this.frameElement(element.src, styles.same, index)
+            this.frameElement(element.src, "same", index)
           ];
         case 'POSITIVE':
           return [
-            this.frameElement(element.cmp, styles.added, index)
+            this.frameElement(element.cmp, "added", index)
           ];
         case 'NEGATIVE':
           return [
-            this.frameElement(element.src, styles.removed, index)
+            this.frameElement(element.src, "removed", index)
           ];
         default:
           return [];
       }
     }));
 
-    return <ul style={styles.listContainer}>
+    return <ul>
       {this.includeTopLevelLeftBracket()}
       {output}
       {this.includeTopLevelRightBracket()}
@@ -103,16 +103,3 @@ class ArrayNode extends Node {
 }
 
 module.exports = ArrayNode;
-
-const styles = {
-  removed: {
-    backgroundColor: "#F47B7B"
-  },
-  added: {
-    backgroundColor: "#0EFF6A"
-  },
-  same: {},
-  listContainer: {
-    listStyleType: "none"
-  }
-};

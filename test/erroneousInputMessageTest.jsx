@@ -6,12 +6,12 @@ describe('ErroneousInputMessage', () => {
 
   it('should not render the error message when inputToBeDefined is defined', () => {
     const wrapper = shallow(<ErroneousInputMessage inputToBeDefined={"is_defined"} errorMessage="ERROR"/>);
-    expect(wrapper.html()).toEqual('<div style="color:red;font-weight:bold;"></div>');
+    expect(wrapper.html()).toEqual('<div class="errorMessage"></div>');
   });
 
   it('should render the error message when inputToBeDefined is undefined', () => {
     const wrapper = shallow(<ErroneousInputMessage errorMessage="ERROR"/>);
-    expect(wrapper.html()).toEqual('<div style="color:red;font-weight:bold;">ERROR</div>');
+    expect(wrapper.html()).toEqual('<div class="errorMessage">ERROR</div>');
   });
 
 });
