@@ -3,4 +3,3 @@ posting insecure data on remote websites to inspect differences in JSON. JDiff's
 
 TODO:
 - Style application UI.
-- Should not update view when input is invalid (handle erroneous input)

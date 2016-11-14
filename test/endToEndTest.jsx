@@ -1,4 +1,6 @@
 import Index from '../src/index.jsx';
+import JSONInput from '../src/jsonInput.jsx';
+
 import { shallow } from 'enzyme';
 import React from 'react';
 
@@ -10,18 +12,35 @@ describe("endToEndTest", () => {
 
   it('should render the expected diff for valid JSON input', () => {
     const wrapper = shallow(<Index/>);
-    let index = wrapper.instance();
 
-    // Set input
-    index.setState(inputData);
+    // No state set
+    expect(wrapper.html()).toEqual('<div id="index">' +
+        '<input placeholder="source JSON" value=""/>' +
+        '<input placeholder="comparison JSON" value=""/>' +
+        '<div style="color:red;font-weight:bold;">Source JSON input is invalid.</div>' +
+        '<div style="color:red;font-weight:bold;">Comparison JSON input is invalid.</div>' +
+        '<div id="output">' +
+          '<div style="font-weight:bold;">Output:</div>' +
+        '</div>' +
+      '</div>');
 
-    // Render
-    const updatedWrapper = shallow(index.render());
+    // Simulate change on inputs to update state
+    expect(wrapper.find(JSONInput).length).toEqual(2);
 
-    // Test output
-    expect(updatedWrapper.html()).toEqual('<div id="index">' +
+    wrapper.find(JSONInput).first().simulate('change', {target: {value: inputData.srcValue}});
+    wrapper.find(JSONInput).last().simulate('change', {target: {value: inputData.cmpValue}});
+
+    expect(wrapper.state().srcValue).toEqual(inputData.srcValue);
+    expect(wrapper.state().cmpValue).toEqual(inputData.cmpValue);
+
+    wrapper.update();
+
+    // Verify changes to output html
+    expect(wrapper.html()).toEqual('<div id="index">' +
         '<input placeholder="source JSON" value="{&quot;field_different&quot;: &quot;one thing&quot;, &quot;field_negative&quot;: 2, &quot;field_same&quot;: null, &quot;object_same&quot;: {&quot;field_different&quot;: &quot;one thing&quot;, &quot;field_negative&quot;: 2, &quot;field_same&quot;: null}, &quot;array_same&quot;: [&quot;same&quot;, &quot;different1&quot;]}"/>' +
-        '<input placeholder="compare JSON" value="{&quot;field_different&quot;: &quot;another thing&quot;, &quot;field_same&quot;: null, &quot;field_positive&quot;: true, &quot;object_same&quot;: {&quot;field_different&quot;: &quot;another thing&quot;, &quot;field_positive&quot;: true, &quot;field_same&quot;: null}, &quot;object_different&quot;: {&quot;array&quot;: [], &quot;object&quot;: {}, &quot;number&quot;: 123}, &quot;array_different&quot;: [123,[],{}], &quot;array_same&quot;: [&quot;same&quot;, &quot;different2&quot;, &quot;added&quot;]}"/>' +
+        '<input placeholder="comparison JSON" value="{&quot;field_different&quot;: &quot;another thing&quot;, &quot;field_same&quot;: null, &quot;field_positive&quot;: true, &quot;object_same&quot;: {&quot;field_different&quot;: &quot;another thing&quot;, &quot;field_positive&quot;: true, &quot;field_same&quot;: null}, &quot;object_different&quot;: {&quot;array&quot;: [], &quot;object&quot;: {}, &quot;number&quot;: 123}, &quot;array_different&quot;: [123,[],{}], &quot;array_same&quot;: [&quot;same&quot;, &quot;different2&quot;, &quot;added&quot;]}"/>' +
+        '<div style="color:red;font-weight:bold;"></div>' +
+        '<div style="color:red;font-weight:bold;"></div>' +
         '<div id="output">' +
           '<div style="font-weight:bold;">Output:</div>' +
           '<ul style="list-style-type:none;">{' +
